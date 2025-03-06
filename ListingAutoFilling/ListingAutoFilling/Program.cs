@@ -1,11 +1,14 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using ListingAutoFilling.Helpers.AddText;
 
 namespace ListingAutoFilling
 {
     public class Program
     {
         private const string DocFileName = @"C:\university\tst.docx";
+        private const string PathToSearch = @"C:\university\danilka\RIS_CourseWork\ServerApp";
+        
         public static void Main(string[] args)
         {
             using WordprocessingDocument wordDoc = WordprocessingDocument.Open(DocFileName, true);
@@ -13,17 +16,9 @@ namespace ListingAutoFilling
             
             Body body = mainPart.Document.AppendChild(new Body());
 
-            Run run = new Run();
-            RunProperties runProps = new RunProperties();
-            Bold bold = new Bold();
-            runProps.Append(bold);
-            run.Append(runProps);
-            run.Append(new Text("Привет"));
+            var addTextToWordFileHelper = new AddTextToWordFileHelper();
 
-            Paragraph para = new Paragraph();
-            para.Append(run);
-
-            body.Append(para);
+            addTextToWordFileHelper.AddTextToWordFile(PathToSearch, body);
         }
     }
 }
